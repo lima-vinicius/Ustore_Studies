@@ -1,0 +1,20 @@
+{
+  "name": "Ustore_Studies",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "repository": "https://github.com/lima-vinicius/Ustore_Studies.git",
+  "author": "Vinícius Lima <viniciusraflima@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon ."
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.3",
+    "require-directory": "^2.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
