@@ -17,6 +17,7 @@ class Application {
 
     routes() {
         this.express.use(routes.userRoutes)
+        this.express.use(routes.loginRoutes)
     }
 }
 
