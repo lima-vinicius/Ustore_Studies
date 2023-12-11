@@ -1,4 +1,5 @@
 module.exports = {
     admin: 1,
-    user: 2
+    customer: 2,
+    employee: 3
 }

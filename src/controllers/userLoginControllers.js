@@ -1,29 +1,47 @@
 const bcrypt = require('bcryptjs')
 
 const { User } = require('../models')
-const generateToken = require('../config/generateToken')
+const { generateToken } = require('../utils')
 
-
-const create = async (req, res) => {
+const create = async (req, res, next) => {
     try {
         const { email, password } = req.body
 
         const user = await User.findOne({ email })
 
         if (!user) {
-            res.status(404).json({ success: false, message: 'Email not found' });
+            return next({
+                message: 'Email not found',
+                status: 404,
+            });
         }
         
         if (!await bcrypt.compare(password, user.password)) {
-            res.status(404).json({ success: false, message: 'Wrong password' });
+            return next({
+                message: 'Wrong password',
+                status: 404,
+            });
         }
 
         user.password = undefined
 
-        res.status(200).json({ success: true, message: 'Login successfully.', data: { user, token: generateToken({ id: user.id }) } });
+        res.locals = {
+            ...res.locals,
+            message: 'Login successfully',
+            data: { 
+                user, 
+                token: generateToken({ id: user.id }) 
+            },
+            status: 200,
+        }
+
+        next()
 
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Internal server error' });
+        return next({
+            message: error.message,
+            status: 500
+        })
     }
 }
 
